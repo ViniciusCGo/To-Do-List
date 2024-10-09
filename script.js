@@ -4,6 +4,7 @@ const btnDeleteAll = document.querySelector('.header button')
 const ul = document.querySelector('ul')
 
 var itensDB = []
+let currentFilter = 'all';
 
 btnDeleteAll.onclick = () => {
   itensDB = []
@@ -39,10 +40,15 @@ function updateDB() {
 
 function loadItens() {
   ul.innerHTML = "";
-  itensDB = JSON.parse(localStorage.getItem('todolist')) ?? []
+  itensDB = JSON.parse(localStorage.getItem('todolist')) ?? [];
+
   itensDB.forEach((item, i) => {
-    insertItemTela(item.item, item.status, i)
-  })
+    if (currentFilter === 'all' || 
+        (currentFilter === 'completed' && item.status === 'checked') || 
+        (currentFilter === 'pending' && item.status === '')) {
+      insertItemTela(item.item, item.status, i);
+    }
+  });
 }
 
 function insertItemTela(text, status, i) {
@@ -67,7 +73,6 @@ function insertItemTela(text, status, i) {
 }
 
 function done(chk, i) {
-
   if (chk.checked) {
     itensDB[i].status = 'checked' 
   } else {
@@ -80,6 +85,11 @@ function done(chk, i) {
 function removeItem(i) {
   itensDB.splice(i, 1)
   updateDB()
+}
+
+function filterItems(filter) {
+  currentFilter = filter;
+  loadItens();
 }
 
 loadItens()
