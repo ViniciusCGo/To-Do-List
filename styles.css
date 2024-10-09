@@ -108,6 +108,26 @@ li {
   text-decoration: line-through;
 }
 
+.filter {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.filter button {
+  padding: 10px;
+  margin: 0 10px;
+  border: none;
+  background-color: rgb(139, 14, 223);
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.filter button:hover {
+  background-color: rgb(115, 10, 186);
+}
+
 @media (max-width: 775px) {
   input {
     width: 70%;
