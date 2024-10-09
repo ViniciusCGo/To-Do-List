@@ -20,13 +20,13 @@
       <hr />
       <br />
       <div class="divInsert">
-        <input class="textInsert" type="text" />
+        <input class="textInsert" type="text" placeholder="Adicione a tarefa" />
         <button><i class="bx bx-plus"></i></button>
       </div>
       <div class="filter">
-        <button onclick="filterItems('all')">Todas</button>
-        <button onclick="filterItems('completed')">Concluídas</button>
-        <button onclick="filterItems('pending')">Pendentes</button>
+        <button onclick="filterItems('all', this)" class="active">Todas</button>
+        <button onclick="filterItems('completed', this)">Concluídas</button>
+        <button onclick="filterItems('pending', this)">Pendentes</button>
       </div>
       <ul></ul>
     </div>
