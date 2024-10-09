@@ -1,45 +1,45 @@
-const texto = document.querySelector('input')
-const btnInsert = document.querySelector('.divInsert button')
-const btnDeleteAll = document.querySelector('.header button')
-const ul = document.querySelector('ul')
+const texto = document.querySelector('.textInsert');
+const btnInsert = document.querySelector('.divInsert button');
+const btnDeleteAll = document.querySelector('.header button');
+const ul = document.querySelector('ul');
 
-var itensDB = []
-let currentFilter = 'all';
+var itensDB = [];
+let currentFilter = 'all'; // Definir filtro atual como 'all'
 
 btnDeleteAll.onclick = () => {
-  itensDB = []
-  updateDB()
-}
+  itensDB = [];
+  updateDB();
+};
 
 texto.addEventListener('keypress', e => {
   if (e.key == 'Enter' && texto.value != '') {
-    setItemDB()
+    setItemDB();
   }
-})
+});
 
 btnInsert.onclick = () => {
   if (texto.value != '') {
-    setItemDB()
+    setItemDB();
   }
-}
+};
 
 function setItemDB() {
   if (itensDB.length >= 20) {
-    alert('Limite máximo de 20 itens atingido!')
-    return
+    alert('Limite máximo de 20 itens atingido!');
+    return;
   }
 
-  itensDB.push({ 'item': texto.value, 'status': '' })
-  updateDB()
+  itensDB.push({ 'item': texto.value, 'status': '' });
+  updateDB();
 }
 
 function updateDB() {
-  localStorage.setItem('todolist', JSON.stringify(itensDB))
-  loadItens()
+  localStorage.setItem('todolist', JSON.stringify(itensDB));
+  loadItens();
 }
 
 function loadItens() {
-  ul.innerHTML = "";
+  ul.innerHTML = '';
   itensDB = JSON.parse(localStorage.getItem('todolist')) ?? [];
 
   itensDB.forEach((item, i) => {
@@ -52,7 +52,7 @@ function loadItens() {
 }
 
 function insertItemTela(text, status, i) {
-  const li = document.createElement('li')
+  const li = document.createElement('li');
   
   li.innerHTML = `
     <div class="divLi">
@@ -60,36 +60,43 @@ function insertItemTela(text, status, i) {
       <span data-si=${i}>${text}</span>
       <button onclick="removeItem(${i})" data-i=${i}><i class='bx bx-trash'></i></button>
     </div>
-    `
-  ul.appendChild(li)
+    `;
+  ul.appendChild(li);
 
   if (status) {
-    document.querySelector(`[data-si="${i}"]`).classList.add('line-through')
+    document.querySelector(`[data-si="${i}"]`).classList.add('line-through');
   } else {
-    document.querySelector(`[data-si="${i}"]`).classList.remove('line-through')
+    document.querySelector(`[data-si="${i}"]`).classList.remove('line-through');
   }
 
-  texto.value = ''
+  texto.value = '';
 }
 
 function done(chk, i) {
   if (chk.checked) {
-    itensDB[i].status = 'checked' 
+    itensDB[i].status = 'checked';
   } else {
-    itensDB[i].status = '' 
+    itensDB[i].status = '';
   }
 
-  updateDB()
+  updateDB();
 }
 
 function removeItem(i) {
-  itensDB.splice(i, 1)
-  updateDB()
+  itensDB.splice(i, 1);
+  updateDB();
 }
 
-function filterItems(filter) {
+function filterItems(filter, element) {
   currentFilter = filter;
   loadItens();
+
+
+  const buttons = document.querySelectorAll('.filter button');
+  buttons.forEach(button => button.classList.remove('active'));
+
+
+  element.classList.add('active');
 }
 
-loadItens()
+loadItens();
